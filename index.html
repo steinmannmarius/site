@@ -73,6 +73,45 @@
                 transform: translateY(10px);
             }
         }
+
+        /* Masonry-Grid für Bilder */
+        .gallery {
+            column-count: 3;
+            column-gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            opacity: 0.9;
+            filter: grayscale(20%);
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            opacity: 1;
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+            filter: grayscale(0%);
+        }
+
+        @media (max-width: 1024px) {
+            .gallery {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                column-count: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -84,6 +123,32 @@
         <h1>STEINMANNMARIUS</h1>
         <h2>Fotogalerie</h2>
         <div class="arrow">&#8595;</div>
+    </div>
+
+    <!-- Masonry-Grid Galerie -->
+    <div class="gallery">
+        <img src="marius_ohne_black.jpg" alt="Bild 1" loading="lazy" />
+        <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 2" loading="lazy" />
+        <img src="sushi.jpg" alt="Bild 3" loading="lazy" />
+        <img src="h1.jpg" alt="Bild 4" loading="lazy" />
+        <img src="h2.jpg" alt="Bild 5" loading="lazy" />
+        <img src="h3.jpg" alt="Bild 6" loading="lazy" />
+        <img src="h4.jpg" alt="Bild 7" loading="lazy" />
+        <img src="h5.jpg" alt="Bild 8" loading="lazy" />
+        <img src="h6.jpg" alt="Bild 9" loading="lazy" />
+        <img src="h7.jpg" alt="Bild 10" loading="lazy" />
+        <img src="h8.jpg" alt="Bild 11" loading="lazy" />
+        <img src="h9.jpg" alt="Bild 12" loading="lazy" />
+        <img src="h10.jpg" alt="Bild 13" loading="lazy" />
+        <img src="h11.jpg" alt="Bild 14" loading="lazy" />
+        <img src="h12.jpg" alt="Bild 15" loading="lazy" />
+        <img src="h13.jpg" alt="Bild 16" loading="lazy" />
+        <img src="h14.jpg" alt="Bild 17" loading="lazy" />
+        <img src="h15.jpg" alt="Bild 18" loading="lazy" />
+        <img src="leandro.jpg" alt="Bild 19" loading="lazy" />
+        <img src="puch2.jpg" alt="Bild 20" loading="lazy" />
+        <img src="zypern.jpg" alt="Bild 21" loading="lazy" />
+        <img src="ibiza.jpg" alt="Bild 22" loading="lazy" />
     </div>
 </body>
 </html>
