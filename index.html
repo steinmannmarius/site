@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit rotierender Animation */
+      /* Hero-Bereich mit modernem Hintergrund */
       .hero {
         height: 100vh;
         display: flex;
@@ -47,23 +47,27 @@
         align-items: center;
         text-align: center;
         position: relative;
-        background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+        background: linear-gradient(135deg, rgba(50, 50, 50, 0.8), rgba(0, 0, 0, 1));
         overflow: hidden;
-        animation: rotateBackground 8s linear infinite;
       }
 
-      @keyframes rotateBackground {
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 70%);
+        animation: heroEffect 6s infinite alternate;
+      }
+
+      @keyframes heroEffect {
         0% {
-          transform: rotate(0deg);
-          background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
-        }
-        50% {
-          transform: rotate(1deg);
-          background: radial-gradient(circle, rgba(255, 20, 20, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+          transform: scale(1);
+          opacity: 0.6;
         }
         100% {
-          transform: rotate(0deg);
-          background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+          transform: scale(1.2);
+          opacity: 0.3;
         }
       }
 
@@ -74,6 +78,8 @@
         text-transform: uppercase;
         letter-spacing: 4px;
         color: #ffffff;
+        position: relative;
+        z-index: 1;
       }
 
       /* Galerie-Titel */
@@ -138,7 +144,7 @@
 
     <!-- Hero-Bereich -->
     <div class="hero">
-      <h1>steinmannmarius.ch</h1>
+      <h1>Marius</h1>
     </div>
 
     <!-- Galerie-Titel -->
