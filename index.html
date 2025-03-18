@@ -43,7 +43,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(135deg, #001f3f, #003366, #004080, #00509e);
+            background: linear-gradient(135deg, #1a1a1a, #333, #4d4d4d, #666);
             background-size: 400% 400%;
             animation: gradientAnimation 10s infinite alternate ease-in-out;
         }
@@ -58,18 +58,20 @@
         }
 
         .hero h1 {
-            font-size: 5rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            letter-spacing: 3px;
+            color: #e0e0e0;
+            text-shadow: none;
         }
 
         .hero h2 {
-            font-size: 2rem;
-            font-weight: 300;
+            font-size: 1.8rem;
+            font-weight: 400;
             margin-top: 10px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            color: #b0b0b0;
+            text-shadow: none;
         }
 
         .arrow {
@@ -86,33 +88,6 @@
                 transform: translateY(10px);
             }
         }
-
-        /* Masonry-Grid für Bilder */
-        .gallery {
-            column-count: 3;
-            column-gap: 15px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .gallery img {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: block;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-            opacity: 0.9;
-            filter: grayscale(20%);
-        }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-            opacity: 1;
-            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
-            filter: grayscale(0%);
-        }
     </style>
 </head>
 <body>
@@ -121,7 +96,7 @@
 
     <!-- Hero-Bereich -->
     <div class="hero">
-        <h1>STEINMANNMARIUS</h1>
+        <h1>Steinmann Marius</h1>
         <h2>Fotogalerie</h2>
         <div class="arrow">&#8595;</div>
     </div>
