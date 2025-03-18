@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit animiertem Hintergrund */
+      /* Hero-Bereich mit rotierender Animation */
       .hero {
         height: 100vh;
         display: flex;
@@ -47,17 +47,23 @@
         align-items: center;
         text-align: center;
         position: relative;
-        background: radial-gradient(circle, rgba(255, 50, 50, 0.3) 0%, rgba(0, 0, 0, 1) 100%);
+        background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
         overflow: hidden;
-        animation: backgroundGlow 4s infinite alternate;
+        animation: rotateBackground 8s linear infinite;
       }
 
-      @keyframes backgroundGlow {
+      @keyframes rotateBackground {
         0% {
-          background: radial-gradient(circle, rgba(255, 50, 50, 0.5) 0%, rgba(0, 0, 0, 1) 100%);
+          transform: rotate(0deg);
+          background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+        50% {
+          transform: rotate(1deg);
+          background: radial-gradient(circle, rgba(255, 20, 20, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
         }
         100% {
-          background: radial-gradient(circle, rgba(255, 100, 100, 0.3) 0%, rgba(0, 0, 0, 1) 100%);
+          transform: rotate(0deg);
+          background: radial-gradient(circle, rgba(255, 50, 50, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
         }
       }
 
