@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fotogalerie</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Orbitron:wght@400;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -13,14 +13,13 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        scroll-behavior: smooth;
       }
 
       body {
-        background-color: #222;
+        background-color: #181818;
         color: #fff;
         font-family: "Poppins", sans-serif;
-        margin: 0;
-        padding: 0;
       }
 
       /* Navigation */
@@ -29,42 +28,44 @@
         width: 100%;
         top: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.85);
         padding: 15px 20px;
         text-align: center;
         font-size: 1.5rem;
         font-weight: bold;
         z-index: 1000;
+        box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+        backdrop-filter: blur(8px);
       }
 
-      /* Hero-Bereich */
+      /* Hero-Bereich mit coolem 3D-Titel */
       .hero {
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 6vw;
-        font-weight: bold;
         text-align: center;
         position: relative;
-        background: radial-gradient(circle, rgba(117, 101, 101, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+        background: radial-gradient(circle, rgba(50, 50, 50, 0.3) 0%, rgba(0, 0, 0, 1) 100%);
+        overflow: hidden;
       }
 
-      .hero::before {
-        content: "";
-        position: absolute;
-        width: 300%;
-        height: 300%;
-        background: conic-gradient(from 0deg, rgba(211, 72, 72, 0.1), transparent, rgba(211, 72, 72, 0.1));
-        animation: rotateEffect 15s linear infinite;
+      .hero h1 {
+        font-size: 6vw;
+        font-weight: 800;
+        font-family: "Orbitron", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-shadow: 0 0 20px rgba(255, 0, 150, 0.8), 0 0 40px rgba(0, 150, 255, 0.8);
+        animation: glow 2s infinite alternate;
       }
 
-      @keyframes rotateEffect {
-        from {
-          transform: rotate(0deg);
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 20px rgba(255, 0, 150, 0.8), 0 0 40px rgba(0, 150, 255, 0.8);
         }
-        to {
-          transform: rotate(180deg);
+        100% {
+          text-shadow: 0 0 40px rgba(255, 0, 150, 1), 0 0 60px rgba(0, 150, 255, 1);
         }
       }
 
@@ -74,6 +75,7 @@
         padding: 50px 20px;
         font-size: 2rem;
         font-weight: bold;
+        text-transform: uppercase;
       }
 
       /* Masonry-Grid für Bilder */
@@ -81,6 +83,8 @@
         column-count: 3;
         column-gap: 15px;
         padding: 20px;
+        max-width: 1200px;
+        margin: auto;
       }
 
       .gallery img {
@@ -91,12 +95,19 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
         box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
         opacity: 0.9;
+        filter: grayscale(20%);
       }
 
       .gallery img:hover {
         transform: scale(1.05);
         opacity: 1;
         box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+        filter: grayscale(0%);
+      }
+
+      /* Smooth Hover-Scroll Effekt */
+      .gallery img {
+        transition: all 0.3s ease-out;
       }
 
       /* Responsive Anpassung */
@@ -104,7 +115,7 @@
         .gallery {
           column-count: 2;
         }
-        .hero {
+        .hero h1 {
           font-size: 8vw;
         }
       }
@@ -113,7 +124,7 @@
         .gallery {
           column-count: 1;
         }
-        .hero {
+        .hero h1 {
           font-size: 10vw;
         }
       }
@@ -125,7 +136,7 @@
 
     <!-- Hero-Bereich -->
     <div class="hero">
-      <p>Willkommen in meiner Galerie</p>
+      <h1>Willkommen in meiner Galerie</h1>
     </div>
 
     <!-- Galerie-Titel -->
