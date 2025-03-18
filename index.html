@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit stilvollem Hintergrund */
+      /* Hero-Bereich mit dynamischer Schriftgröße */
       .hero {
         height: 100vh;
         display: flex;
@@ -52,7 +52,7 @@
       }
 
       .hero h1 {
-        font-size: 4vw;
+        font-size: clamp(3rem, 8vw, 5rem);
         font-weight: 700;
         font-family: "Poppins", sans-serif;
         text-transform: uppercase;
@@ -103,17 +103,11 @@
         .gallery {
           column-count: 2;
         }
-        .hero h1 {
-          font-size: 8vw;
-        }
       }
 
       @media (max-width: 768px) {
         .gallery {
           column-count: 1;
-        }
-        .hero h1 {
-          font-size: 10vw;
         }
       }
     </style>
