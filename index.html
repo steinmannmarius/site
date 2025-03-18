@@ -1,155 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fotogalerie</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Orbitron:wght@400;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet">
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        scroll-behavior: smooth;
-      }
-
-      body {
-        background-color: #0a0a0a;
-        color: #fff;
-        font-family: "Poppins", sans-serif;
-      }
-
-      /* Navigation */
-      .navbar {
-        position: fixed;
-        width: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.85);
-        padding: 15px 20px;
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-        z-index: 1000;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(8px);
-        color: #f0f0f0;
-      }
-
-      /* Hero-Bereich mit dunklerem und weicherem Farbverlauf */
-      .hero {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        background: radial-gradient(circle, #060608, #0e0e14, #141420, #1a1a2c);
-        background-size: 800% 800%;
-        animation: gradientMove 60s ease-in-out infinite alternate;
-      }
-
-      @keyframes gradientMove {
-        0% {
-          background-position: 0% 0%;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
         }
-        50% {
-          background-position: 50% 50%;
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
         }
-        100% {
-          background-position: 0% 0%;
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
         }
-      }
 
-      .hero h1 {
-        font-size: clamp(3rem, 8vw, 5rem);
-        font-weight: 700;
-        font-family: "Poppins", sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        color: #ffffff;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Masonry-Grid für Bilder */
-      .gallery {
-        column-count: 3;
-        column-gap: 15px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: auto;
-      }
-
-      .gallery img {
-        width: 100%;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        display: block;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-        opacity: 0.9;
-        filter: grayscale(20%);
-      }
-
-      .gallery img:hover {
-        transform: scale(1.05);
-        opacity: 1;
-        box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
-        filter: grayscale(0%);
-      }
-
-      /* Responsive Anpassung */
-      @media (max-width: 1024px) {
-        .gallery {
-          column-count: 2;
+        /* Hero-Bereich */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle, #4b0082, #8a2be2);
         }
-      }
 
-      @media (max-width: 768px) {
-        .gallery {
-          column-count: 1;
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
-      }
+
+        .hero h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        .arrow {
+            margin-top: 20px;
+            font-size: 2rem;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <!-- Navigation -->
-    <div class="navbar">steinmannmarius.ch</div>
+    <div class="navbar">Marius Steinmann - Platform Developer</div>
 
     <!-- Hero-Bereich -->
     <div class="hero">
-      <h1>Fotogalerie</h1>
+        <h1>STEINMANNMARIUS</h1>
+        <h2>Fotogalerie</h2>
+        <div class="arrow">&#8595;</div>
     </div>
-
-    <!-- Masonry-Grid Galerie -->
-    <div class="gallery">
-      <img src="marius_ohne_black.jpg" alt="Bild 1" loading="lazy" />
-      <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 2" loading="lazy" />
-      <img src="sushi.jpg" alt="Bild 3" loading="lazy" />
-      <img src="h1.jpg" alt="Bild 4" loading="lazy" />
-      <img src="h2.jpg" alt="Bild 5" loading="lazy" />
-      <img src="h3.jpg" alt="Bild 6" loading="lazy" />
-      <img src="h4.jpg" alt="Bild 7" loading="lazy" />
-      <img src="h5.jpg" alt="Bild 8" loading="lazy" />
-      <img src="h6.jpg" alt="Bild 9" loading="lazy" />
-      <img src="h7.jpg" alt="Bild 10" loading="lazy" />
-      <img src="h8.jpg" alt="Bild 11" loading="lazy" />
-      <img src="h9.jpg" alt="Bild 12" loading="lazy" />
-      <img src="h10.jpg" alt="Bild 13" loading="lazy" />
-      <img src="h11.jpg" alt="Bild 14" loading="lazy" />
-      <img src="h12.jpg" alt="Bild 15" loading="lazy" />
-      <img src="h13.jpg" alt="Bild 16" loading="lazy" />
-      <img src="h14.jpg" alt="Bild 17" loading="lazy" />
-      <img src="h15.jpg" alt="Bild 18" loading="lazy" />
-      <img src="leandro.jpg" alt="Bild 19" loading="lazy" />
-      <img src="puch2.jpg" alt="Bild 20" loading="lazy" />
-      <img src="zypern.jpg" alt="Bild 21" loading="lazy" />
-      <img src="ibiza.jpg" alt="Bild 22" loading="lazy" />
-    </div>
-  </body>
+</body>
 </html>
