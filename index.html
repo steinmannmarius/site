@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit modernem animierten Hintergrund */
+      /* Hero-Bereich mit stilvollem Hintergrund */
       .hero {
         height: 100vh;
         display: flex;
@@ -47,29 +47,8 @@
         align-items: center;
         text-align: center;
         position: relative;
-        background: linear-gradient(135deg, #1e1e1e, #000000);
+        background: linear-gradient(135deg, #232526, #414345);
         overflow: hidden;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        width: 150%;
-        height: 150%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 70%);
-        opacity: 0.3;
-        animation: floatingEffect 6s infinite alternate ease-in-out;
-      }
-
-      @keyframes floatingEffect {
-        0% {
-          transform: translateY(-10px) rotate(0deg);
-          opacity: 0.4;
-        }
-        100% {
-          transform: translateY(10px) rotate(2deg);
-          opacity: 0.6;
-        }
       }
 
       .hero h1 {
@@ -141,7 +120,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <div class="navbar">steinmannmarius.ch</div>
+    <div class="navbar">Fotogalerie</div>
 
     <!-- Hero-Bereich -->
     <div class="hero">
