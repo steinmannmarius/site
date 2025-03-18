@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit modernem Hintergrund */
+      /* Hero-Bereich mit modernem animierten Hintergrund */
       .hero {
         height: 100vh;
         display: flex;
@@ -54,10 +54,22 @@
       .hero::before {
         content: "";
         position: absolute;
-        width: 100%;
-        height: 100%;
-        background: url('https://www.transparenttextures.com/patterns/cubes.png');
-        opacity: 0.2;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 70%);
+        opacity: 0.3;
+        animation: floatingEffect 6s infinite alternate ease-in-out;
+      }
+
+      @keyframes floatingEffect {
+        0% {
+          transform: translateY(-10px) rotate(0deg);
+          opacity: 0.4;
+        }
+        100% {
+          transform: translateY(10px) rotate(2deg);
+          opacity: 0.6;
+        }
       }
 
       .hero h1 {
