@@ -4,60 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fotogalerie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet" />
     <style>
       body {
         background-color: #373636;
         color: #FFFFFF;
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
       }
+
       .hero {
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 7rem;
+        font-size: 7vw;
         font-weight: bold;
         position: relative;
         overflow: hidden;
-        background: radial-gradient(
-          circle,
-          rgba(117, 101, 101, 0.1) 0%,
-          rgba(0, 0, 0, 1) 100%
-        );
+        text-align: center;
+        background: radial-gradient(circle, rgba(117, 101, 101, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
       }
+
       .hero::before {
         content: "";
         position: absolute;
         width: 300%;
         height: 300%;
-        background: conic-gradient(
-          from 0deg,
-          rgba(211, 72, 72, 0.1),
-          transparent,
-          rgba(211, 72, 72, 0.1)
-        );
-        animation: rotateEffect 10s linear infinite;
+        background: conic-gradient(from 0deg, rgba(211, 72, 72, 0.1), transparent, rgba(211, 72, 72, 0.1));
+        animation: rotateEffect 15s linear infinite;
       }
+
       @keyframes rotateEffect {
         from {
           transform: rotate(0deg);
         }
         to {
-          transform: rotate(360deg);
+          transform: rotate(180deg);
         }
       }
+
       .gallery-section {
         text-align: center;
         padding: 20px;
       }
+
       .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
         padding: 20px;
       }
+
       .gallery img {
         width: 100%;
         height: auto;
@@ -65,29 +64,43 @@
         transition: transform 0.3s, opacity 0.3s;
         opacity: 0.8;
         box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        cursor: pointer;
       }
-      .gallery img:hover {
+
+      .gallery img:hover,
+      .gallery img:active {
         transform: scale(1.05);
         opacity: 1;
         box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .gallery {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 10px;
+        }
+
+        .hero {
+          font-size: 10vw;
+        }
       }
     </style>
   </head>
   <body>
     <div class="hero">
-    <p>steinmannmarius.ch</p>
+      <p>steinmannmarius.ch</p>
     </div>
 
     <div class="gallery-section">
-      <h1>Gallerie</h1>
+      <h1>Galerie</h1>
     </div>
 
     <div class="gallery">
-      <img src="marius_ohne_black.jpg" alt="Bild 1" />
-      <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 4" />
-      <img src="hert.jpg" alt="Bild 3" />
-      <img src="sushi.jpg" alt="Bild 5" />
-      <img src="marius_ohne.jpg" alt="Bild 2" />
+      <img src="marius_ohne_black.jpg" alt="Bild 1" loading="lazy" />
+      <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 4" loading="lazy" />
+      <img src="hert.jpg" alt="Bild 3" loading="lazy" />
+      <img src="sushi.jpg" alt="Bild 5" loading="lazy" />
+      <img src="marius_ohne.jpg" alt="Bild 2" loading="lazy" />
     </div>
   </body>
 </html>
