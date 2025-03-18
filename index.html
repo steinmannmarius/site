@@ -34,11 +34,12 @@
         font-size: 1.5rem;
         font-weight: bold;
         z-index: 1000;
-        box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+        box-shadow: 0 0 10px rgba(100, 100, 255, 0.5);
         backdrop-filter: blur(8px);
+        color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit coolem 3D-Titel */
+      /* Hero-Bereich */
       .hero {
         height: 100vh;
         display: flex;
@@ -56,17 +57,7 @@
         font-family: "Orbitron", sans-serif;
         text-transform: uppercase;
         letter-spacing: 4px;
-        text-shadow: 0 0 20px rgba(255, 0, 150, 0.8), 0 0 40px rgba(0, 150, 255, 0.8);
-        animation: glow 2s infinite alternate;
-      }
-
-      @keyframes glow {
-        0% {
-          text-shadow: 0 0 20px rgba(255, 0, 150, 0.8), 0 0 40px rgba(0, 150, 255, 0.8);
-        }
-        100% {
-          text-shadow: 0 0 40px rgba(255, 0, 150, 1), 0 0 60px rgba(0, 150, 255, 1);
-        }
+        color: #ffffff;
       }
 
       /* Galerie-Titel */
@@ -103,11 +94,6 @@
         opacity: 1;
         box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
         filter: grayscale(0%);
-      }
-
-      /* Smooth Hover-Scroll Effekt */
-      .gallery img {
-        transition: all 0.3s ease-out;
       }
 
       /* Responsive Anpassung */
