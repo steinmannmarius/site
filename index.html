@@ -39,7 +39,7 @@
         color: #f0f0f0;
       }
 
-      /* Hero-Bereich mit dynamischer Schriftgröße */
+      /* Hero-Bereich mit animiertem Farbverlauf */
       .hero {
         height: 100vh;
         display: flex;
@@ -47,8 +47,22 @@
         align-items: center;
         text-align: center;
         position: relative;
-        background: linear-gradient(135deg, #232526, #414345);
         overflow: hidden;
+        background: linear-gradient(-45deg, #232526, #414345, #1e1e1e, #2c2c2c);
+        background-size: 300% 300%;
+        animation: gradientMove 10s ease infinite;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
       }
 
       .hero h1 {
