@@ -22,7 +22,6 @@
         font-family: "Poppins", sans-serif;
       }
 
-      /* Navigation */
       .navbar {
         position: fixed;
         width: 100%;
@@ -42,7 +41,6 @@
         text-overflow: ellipsis;
       }
 
-      /* Hero-Bereich */
       .hero {
         height: 100vh;
         display: flex;
@@ -80,7 +78,6 @@
         }
       }
 
-      /* Masonry-Grid */
       .gallery {
         column-count: 3;
         column-gap: 15px;
@@ -97,6 +94,7 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
         opacity: 0.9;
         filter: grayscale(20%);
+        cursor: pointer;
       }
 
       .gallery img:hover {
@@ -105,7 +103,6 @@
         filter: grayscale(0%);
       }
 
-      /* Responsive Anpassung */
       @media (max-width: 1024px) {
         .gallery {
           column-count: 2;
@@ -131,6 +128,39 @@
           font-size: 1.5rem;
         }
       }
+
+      /* Lightbox */
+      #lightbox {
+        position: fixed;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: 2000;
+      }
+
+      #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      #lightbox #close {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        font-size: 2.5rem;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        z-index: 2100;
+      }
     </style>
   </head>
   <body>
@@ -146,28 +176,61 @@
 
     <!-- Masonry-Grid Galerie -->
     <div class="gallery">
-        <img src="marius_ohne_black.jpg" alt="Bild 1" loading="lazy" />
-        <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 2" loading="lazy" />
-        <img src="sushi.jpg" alt="Bild 3" loading="lazy" />
-        <img src="h1.jpg" alt="Bild 4" loading="lazy" />
-        <img src="h2.jpg" alt="Bild 5" loading="lazy" />
-        <img src="h3.jpg" alt="Bild 6" loading="lazy" />
-        <img src="h4.jpg" alt="Bild 7" loading="lazy" />
-        <img src="h5.jpg" alt="Bild 8" loading="lazy" />
-        <img src="h6.jpg" alt="Bild 9" loading="lazy" />
-        <img src="h7.jpg" alt="Bild 10" loading="lazy" />
-        <img src="h8.jpg" alt="Bild 11" loading="lazy" />
-        <img src="h9.jpg" alt="Bild 12" loading="lazy" />
-        <img src="h10.jpg" alt="Bild 13" loading="lazy" />
-        <img src="h11.jpg" alt="Bild 14" loading="lazy" />
-        <img src="h12.jpg" alt="Bild 15" loading="lazy" />
-        <img src="h13.jpg" alt="Bild 16" loading="lazy" />
-        <img src="h14.jpg" alt="Bild 17" loading="lazy" />
-        <img src="h15.jpg" alt="Bild 18" loading="lazy" />
-        <img src="leandro.jpg" alt="Bild 19" loading="lazy" />
-        <img src="puch2.jpg" alt="Bild 20" loading="lazy" />
-        <img src="zypern.jpg" alt="Bild 21" loading="lazy" />
-        <img src="ibiza.jpg" alt="Bild 22" loading="lazy" />
+      <img src="marius_ohne_black.jpg" alt="Bild 1" loading="lazy" />
+      <img src="WhatsApp Bild 2025-03-10 um 20.39.48_f0636bd2.jpg" alt="Bild 2" loading="lazy" />
+      <img src="sushi.jpg" alt="Bild 3" loading="lazy" />
+      <img src="h1.jpg" alt="Bild 4" loading="lazy" />
+      <img src="h2.jpg" alt="Bild 5" loading="lazy" />
+      <img src="h3.jpg" alt="Bild 6" loading="lazy" />
+      <img src="h4.jpg" alt="Bild 7" loading="lazy" />
+      <img src="h5.jpg" alt="Bild 8" loading="lazy" />
+      <img src="h6.jpg" alt="Bild 9" loading="lazy" />
+      <img src="h7.jpg" alt="Bild 10" loading="lazy" />
+      <img src="h8.jpg" alt="Bild 11" loading="lazy" />
+      <img src="h9.jpg" alt="Bild 12" loading="lazy" />
+      <img src="h10.jpg" alt="Bild 13" loading="lazy" />
+      <img src="h11.jpg" alt="Bild 14" loading="lazy" />
+      <img src="h12.jpg" alt="Bild 15" loading="lazy" />
+      <img src="h13.jpg" alt="Bild 16" loading="lazy" />
+      <img src="h14.jpg" alt="Bild 17" loading="lazy" />
+      <img src="h15.jpg" alt="Bild 18" loading="lazy" />
+      <img src="leandro.jpg" alt="Bild 19" loading="lazy" />
+      <img src="puch2.jpg" alt="Bild 20" loading="lazy" />
+      <img src="zypern.jpg" alt="Bild 21" loading="lazy" />
+      <img src="ibiza.jpg" alt="Bild 22" loading="lazy" />
     </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+      <span id="close">&times;</span>
+      <img id="lightbox-img" src="" alt="Großes Bild" />
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      const galleryImages = document.querySelectorAll(".gallery img");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const closeBtn = document.getElementById("close");
+
+      galleryImages.forEach((img) => {
+        img.addEventListener("click", () => {
+          lightbox.style.display = "flex";
+          lightboxImg.src = img.src;
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        lightbox.style.display = "none";
+        lightboxImg.src = "";
+      });
+
+      lightbox.addEventListener("click", (e) => {
+        if (e.target !== lightboxImg) {
+          lightbox.style.display = "none";
+          lightboxImg.src = "";
+        }
+      });
+    </script>
   </body>
 </html>
