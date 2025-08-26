@@ -1,7 +1,6 @@
 ---
 layout: null
 ---
-
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -34,29 +33,52 @@ layout: null
       .arrow { margin-top: 20px; font-size: 2rem; animation: bounce 1.5s infinite; }
       @keyframes bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(10px) } }
 
-      /* RESPONSIVES GRID (root-Bilder) */
-      .gallery {
-        display: grid;
-        gap: 15px;
-        padding: 20px;
+      /* Masonry via CSS Columns (Fallback für alle Browser) */
+      .gallery{
         max-width: 1200px;
         margin: auto;
-        grid-template-columns: repeat(4, 1fr);
+        padding: 20px;
+        column-count: 4;
+        column-gap: 15px;
       }
-      @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
-      @media (max-width: 768px)  { .gallery { grid-template-columns: repeat(2, 1fr); } } /* Handy: 2 nebeneinander */
-      @media (max-width: 480px)  {
+      @media (max-width: 1200px){ .gallery{ column-count: 3; } }
+      @media (max-width: 768px){  .gallery{ column-count: 2; } }
+      @media (max-width: 480px){
         .navbar { font-size: 1rem; padding: 8px; }
         .hero h1 { font-size: 2rem; letter-spacing: 1px; }
         .hero h2 { font-size: 1.5rem; }
       }
 
-      .gallery img {
-        width: 100%; height: auto; border-radius: 12px; display: block;
+      .gallery img{
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 0 15px;
+        border-radius: 12px;
         transition: transform .25s ease, opacity .25s ease, filter .25s ease;
-        opacity: .95; filter: grayscale(14%); background: #151515; cursor: pointer;
+        opacity: .95; filter: grayscale(14%); background:#151515; cursor:pointer;
+
+        /* wichtig, damit Kacheln nicht „brechen“ */
+        break-inside: avoid;
+        -webkit-column-break-inside: avoid;
+        page-break-inside: avoid;
       }
       .gallery img:hover { transform: scale(1.02); opacity: 1; filter: grayscale(0%); }
+
+      /* Progressive Enhancement: echtes CSS Grid Masonry sofern unterstützt */
+      @supports (grid-template-rows: masonry) {
+        .gallery{
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: masonry;
+          gap: 15px;
+          column-count: initial;   /* Columns-Fallback deaktivieren */
+          column-gap: initial;
+        }
+        @media (max-width: 1200px){ .gallery{ grid-template-columns: repeat(3,1fr); } }
+        @media (max-width: 768px){  .gallery{ grid-template-columns: repeat(2,1fr); } }
+        .gallery img{ margin: 0; } /* Abstand kommt über gap */
+      }
 
       /* LIGHTBOX + NAVIGATION (Pfeile + Swipe) */
       #lightbox { position: fixed; inset: 0; display: none; justify-content: center; align-items: center;
@@ -74,7 +96,7 @@ layout: null
         display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #cfcfcf; }
       .social {
         display: flex; align-items: center; justify-content: center; gap: 12px;
-        flex-wrap: wrap; /* auf Handy umbrechen */
+        flex-wrap: wrap;
         max-width: 1200px;
       }
       .social a {
@@ -82,12 +104,10 @@ layout: null
         color: #eaeaea; text-decoration: none; opacity: .95;
         padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
         transition: transform .2s ease, opacity .2s ease, background .2s ease;
-        min-height: 44px;  /* große Touchfläche */
-        flex: 1 1 180px;   /* 2 pro Zeile auf Handy */
+        min-height: 44px;
+        flex: 1 1 180px;
       }
-      @media (min-width: 640px) {
-        .social a { flex: 0 0 auto; } /* ab Tablet wieder in einer Reihe */
-      }
+      @media (min-width: 640px) { .social a { flex: 0 0 auto; } }
       .social a:hover { transform: translateY(-1px); opacity: 1; background: rgba(255,255,255,0.08); }
       .social svg { width: 20px; height: 20px; display: block; }
       .copyright { opacity: .7; font-size: .95rem; text-align: center; }
