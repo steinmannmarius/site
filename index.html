@@ -34,7 +34,7 @@ layout: null
       .arrow { margin-top: 20px; font-size: 2rem; animation: bounce 1.5s infinite; }
       @keyframes bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(10px) } }
 
-      /* RESPONSIVES GRID */
+      /* RESPONSIVES GRID (root-Bilder) */
       .gallery {
         display: grid;
         gap: 15px;
@@ -44,7 +44,7 @@ layout: null
         grid-template-columns: repeat(4, 1fr);
       }
       @media (max-width: 1200px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
-      @media (max-width: 768px)  { .gallery { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 768px)  { .gallery { grid-template-columns: repeat(2, 1fr); } } /* Handy: 2 nebeneinander */
       @media (max-width: 480px)  {
         .navbar { font-size: 1rem; padding: 8px; }
         .hero h1 { font-size: 2rem; letter-spacing: 1px; }
@@ -54,49 +54,40 @@ layout: null
       .gallery img {
         width: 100%; height: auto; border-radius: 12px; display: block;
         transition: transform .25s ease, opacity .25s ease, filter .25s ease;
-        opacity: .95; filter: grayscale(14%); background: #151515;
-        cursor: pointer;
+        opacity: .95; filter: grayscale(14%); background: #151515; cursor: pointer;
       }
       .gallery img:hover { transform: scale(1.02); opacity: 1; filter: grayscale(0%); }
 
-      /* LIGHTBOX + NAVIGATION */
-      #lightbox {
-        position: fixed; inset: 0;
-        display: none; justify-content: center; align-items: center;
-        background: rgba(0,0,0,.88); z-index: 2000; padding: 24px;
-        touch-action: pan-y; /* damit horizontales Swipen sauber funktioniert */
-      }
-      #lightbox img {
-        max-width: 92vw; max-height: 88vh;
-        border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,.28);
-        user-select: none;
-      }
-      #close {
-        position: absolute; top: 22px; right: 28px;
-        font-size: 2.2rem; color: #fff; cursor: pointer; font-weight: bold; z-index: 2100;
-      }
-      .nav-btn {
-        position: absolute; top: 50%; transform: translateY(-50%);
-        width: 46px; height: 46px; border-radius: 50%;
-        display: grid; place-items: center; font-size: 1.6rem; color: #fff;
-        background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18);
-        cursor: pointer; user-select: none; z-index: 2100;
-      }
+      /* LIGHTBOX + NAVIGATION (Pfeile + Swipe) */
+      #lightbox { position: fixed; inset: 0; display: none; justify-content: center; align-items: center;
+        background: rgba(0,0,0,.88); z-index: 2000; padding: 24px; touch-action: pan-y; }
+      #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,.28); user-select: none; }
+      #close { position: absolute; top: 22px; right: 28px; font-size: 2.2rem; color: #fff; cursor: pointer; font-weight: bold; z-index: 2100; }
+      .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%;
+        display: grid; place-items: center; font-size: 1.6rem; color: #fff; background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18);
+        cursor: pointer; user-select: none; z-index: 2100; }
       .nav-btn:hover { background: rgba(255,255,255,.18); }
-      #prev { left: 18px; }
-      #next { right: 18px; }
+      #prev { left: 18px; }  #next { right: 18px; }
 
-      /* Footer */
-      footer {
-        border-top: 1px solid rgba(255,255,255,.1); margin-top: 32px; padding: 24px 16px 56px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #cfcfcf;
+      /* FOOTER + Social – mobile freundlich */
+      footer { border-top: 1px solid rgba(255,255,255,.1); margin-top: 32px; padding: 24px 16px 56px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #cfcfcf; }
+      .social {
+        display: flex; align-items: center; justify-content: center; gap: 12px;
+        flex-wrap: wrap; /* auf Handy umbrechen */
+        max-width: 1200px;
       }
-      .social { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
-      .social::-webkit-scrollbar { height: 6px; }
-      .social::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 999px; }
-      .social a { display: inline-flex; align-items: center; gap: 8px; color: #eaeaea; text-decoration: none; opacity: .9;
-        padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-        transition: transform .2s ease, opacity .2s ease, background .2s ease; white-space: nowrap; }
+      .social a {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        color: #eaeaea; text-decoration: none; opacity: .95;
+        padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+        transition: transform .2s ease, opacity .2s ease, background .2s ease;
+        min-height: 44px;  /* große Touchfläche */
+        flex: 1 1 180px;   /* 2 pro Zeile auf Handy */
+      }
+      @media (min-width: 640px) {
+        .social a { flex: 0 0 auto; } /* ab Tablet wieder in einer Reihe */
+      }
       .social a:hover { transform: translateY(-1px); opacity: 1; background: rgba(255,255,255,0.08); }
       .social svg { width: 20px; height: 20px; display: block; }
       .copyright { opacity: .7; font-size: .95rem; text-align: center; }
@@ -119,27 +110,25 @@ layout: null
       <div class="arrow">&#8595;</div>
     </div>
 
-    <!-- Galerie: alle Bilder aus /docs/, Dateinamen sicher encodiert -->
+    <!-- Galerie: ALLE Bilder aus dem Root (nach Endung gefiltert) -->
     <div class="gallery" id="gallery">
       {%- assign _files = site.static_files | sort: "path" -%}
       {%- assign _count = 0 -%}
       {%- for file in _files -%}
-        {%- if file.path contains '/docs/' -%}
-          {%- assign ext = file.extname | downcase -%}
-          {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
-            <img
-              src="{{ site.baseurl }}{{ file.path | uri_escape }}"
-              alt="Bild {{ forloop.index }}"
-              loading="lazy"
-              decoding="async"
-              data-index="{{ _count }}"
-            />
-            {%- assign _count = _count | plus: 1 -%}
-          {%- endif -%}
+        {%- assign ext = file.extname | downcase -%}
+        {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
+          <img
+            src="{{ site.baseurl }}{{ file.path | uri_escape }}"
+            alt="Bild {{ _count | plus: 1 }}"
+            loading="lazy"
+            decoding="async"
+            data-index="{{ _count }}"
+          />
+          {%- assign _count = _count | plus: 1 -%}
         {%- endif -%}
       {%- endfor -%}
       {%- if _count == 0 -%}
-        <p style="opacity:.7">Keine Bilder gefunden. Lege Dateien in <code>docs/</code> ab.</p>
+        <p style="opacity:.7">Keine Bilder gefunden. Lege Bilder ins Repo-Root.</p>
       {%- endif -%}
     </div>
 
@@ -218,34 +207,24 @@ layout: null
         if (e.key === "ArrowRight") show(idx + 1);
       });
 
-      // Swipe-Gesten
+      // Swipe
       let startX = 0, startY = 0, swiping = false;
       lightbox.addEventListener("touchstart", (e) => {
         if (!e.touches.length) return;
-        const t = e.touches[0];
-        startX = t.clientX; startY = t.clientY; swiping = true;
+        const t = e.touches[0]; startX = t.clientX; startY = t.clientY; swiping = true;
       }, { passive: true });
-
       lightbox.addEventListener("touchmove", (e) => {
-        // nur horizontale Wischgeste beachten
         if (!swiping) return;
-        const t = e.touches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
+        const t = e.touches[0]; const dx = t.clientX - startX; const dy = t.clientY - startY;
         if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-          swiping = false;
-          if (dx < 0) show(idx + 1); else show(idx - 1);
+          swiping = false; if (dx < 0) show(idx + 1); else show(idx - 1);
         }
       }, { passive: true });
 
-      // Nach-oben-Button
+      // Nach-oben
       const toTop = document.getElementById("toTop");
-      const toggleToTop = () => {
-        if (window.scrollY > 320) toTop.classList.add("visible"); else toTop.classList.remove("visible");
-      };
-      window.addEventListener("scroll", toggleToTop, { passive: true });
-      toggleToTop();
+      const toggleToTop = () => { if (window.scrollY > 320) toTop.classList.add("visible"); else toTop.classList.remove("visible"); };
+      window.addEventListener("scroll", toggleToTop, { passive: true }); toggleToTop();
     </script>
   </body>
 </html>
-
