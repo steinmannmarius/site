@@ -66,9 +66,9 @@ layout: null
         -webkit-column-break-inside: avoid;
         page-break-inside: avoid;
 
-        /* Performance & Layout-Stabilität */
+        /* Performance und Layout-Stabilität */
         content-visibility: auto;               /* nur rendern, was im Viewport ist */
-        contain-intrinsic-size: 300px 200px;    /* grobe Platzhaltergröße -> weniger Layout-Shift */
+        contain-intrinsic-size: 300px 200px;    /* grobe Platzhaltergrösse -> weniger Layout-Shift */
       }
       .gallery img:hover { transform: scale(1.02); opacity: 1; filter: grayscale(0%); }
 
@@ -272,8 +272,7 @@ layout: null
         const io = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              const img = entry.target; // aktuell nur <img src> vorhanden – Platzhalter entfällt
-              // Falls später Low-Quality-Placeholders (LQIP) genutzt werden: hier echtes src setzen
+              const img = entry.target;
               io.unobserve(img);
             }
           });
@@ -283,3 +282,4 @@ layout: null
     </script>
   </body>
 </html>
+
