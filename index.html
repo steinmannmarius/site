@@ -6,189 +6,439 @@ layout: null
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Photo gallery</title>
-
-    <!-- Optional: Google Font (Poppins). Für beste Performance ggf. entfernen oder lokal hosten. -->
+    <title>Marius Steinmann - Photography</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
-      /* Reset/Grundlagen */
       * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
       html, body { height: 100%; }
-      body { background-color: #0a0a0a; color: #fff; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; }
+      body { 
+        background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+        color: #f5f5f7; 
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
 
+      /* NAVIGATION - Apple Style */
       .navbar {
-        position: fixed; inset: 0 0 auto 0; background: rgba(0,0,0,.6);
-        padding: 10px 15px; text-align: center; font-size: clamp(1rem, 4vw, 1.5rem);
-        font-weight: bold; z-index: 1000; box-shadow: 0 0 10px rgba(255,255,255,.5);
-        backdrop-filter: blur(12px); color: #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        background: rgba(0,0,0,0.8); backdrop-filter: saturate(180%) blur(20px);
+        border-bottom: 0.5px solid rgba(255,255,255,0.1);
+        padding: 0;
+      }
+      .nav-container {
+        max-width: 1200px; margin: 0 auto; padding: 12px 24px;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .nav-logo {
+        font-size: 1.2rem; font-weight: 600; color: #f5f5f7;
+        text-decoration: none; letter-spacing: -0.5px;
+      }
+      .nav-links {
+        display: flex; gap: 32px; align-items: center;
+        list-style: none;
+      }
+      .nav-links a {
+        color: rgba(245,245,247,0.88); text-decoration: none;
+        font-size: 0.875rem; font-weight: 400;
+        transition: color 0.2s ease;
+        position: relative;
+      }
+      .nav-links a:hover { color: #f5f5f7; }
+      .nav-links a::after {
+        content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+        height: 1px; background: #f5f5f7; transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      .nav-links a:hover::after { transform: scaleX(1); }
+      
+      .mobile-menu-btn {
+        display: none; background: none; border: none;
+        color: #f5f5f7; font-size: 1.5rem; cursor: pointer;
       }
 
-      .hero {
-        min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-        background: radial-gradient(circle, #060608, #0e0e14, #141420, #1a1a2c); padding: 0 16px;
-      }
-      .hero h1 { font-size: clamp(2rem, 7vw, 5rem); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-      .hero h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 300; }
-      .arrow { margin-top: 20px; font-size: 2rem; animation: bounce 1.5s infinite; }
-      @keyframes bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(10px) } }
-
-      /* Masonry via CSS Columns (Fallback für alle Browser) */
-      .gallery{
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-        column-count: 4;
-        column-gap: 15px;
-      }
-      @media (max-width: 1200px){ .gallery{ column-count: 3; } }
-      @media (max-width: 768px){  .gallery{ column-count: 2; } }
-      @media (max-width: 480px){
-        .navbar { font-size: 1rem; padding: 8px; }
-        .hero h1 { font-size: 2rem; letter-spacing: 1px; }
-        .hero h2 { font-size: 1.5rem; }
-      }
-
-      /* Bildkacheln: CLS-Reduktion durch content-visibility + contain-intrinsic-size */
-      .gallery img{
-        width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 0 15px;
-        border-radius: 12px;
-        transition: transform .25s ease, opacity .25s ease, filter .25s ease;
-        opacity: .98; filter: grayscale(14%); background:#151515; cursor:pointer;
-
-        /* wichtig für Columns-Layout */
-        break-inside: avoid;
-        -webkit-column-break-inside: avoid;
-        page-break-inside: avoid;
-
-        /* Performance und Layout-Stabilität */
-        content-visibility: auto;               /* nur rendern, was im Viewport ist */
-        contain-intrinsic-size: 300px 200px;    /* grobe Platzhaltergrösse -> weniger Layout-Shift */
-      }
-      .gallery img:hover { transform: scale(1.02); opacity: 1; filter: grayscale(0%); }
-
-      /* Porträt-orientierte Platzhalter (wird via JS markiert) */
-      .gallery img[data-orient="portrait"] { contain-intrinsic-size: 300px 420px; }
-
-      /* Progressive Enhancement: echtes CSS Grid Masonry sofern unterstützt */
-      @supports (grid-template-rows: masonry) {
-        .gallery{
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          grid-template-rows: masonry;
-          gap: 15px;
-          column-count: initial;   /* Columns-Fallback deaktivieren */
-          column-gap: initial;
+      @media (max-width: 768px) {
+        .nav-links { 
+          position: fixed; top: 56px; left: 0; right: 0;
+          flex-direction: column; background: rgba(0,0,0,0.95);
+          backdrop-filter: saturate(180%) blur(20px);
+          padding: 24px; gap: 24px; border-bottom: 0.5px solid rgba(255,255,255,0.1);
+          transform: translateY(-100%); opacity: 0;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+          pointer-events: none;
         }
-        @media (max-width: 1200px){ .gallery{ grid-template-columns: repeat(3,1fr); } }
-        @media (max-width: 768px){  .gallery{ grid-template-columns: repeat(2,1fr); } }
-        .gallery img{ margin: 0; } /* Abstand kommt über gap */
+        .nav-links.active {
+          transform: translateY(0); opacity: 1; pointer-events: all;
+        }
+        .mobile-menu-btn { display: block; }
       }
 
-      /* LIGHTBOX + NAVIGATION (Pfeile + Swipe) */
-      #lightbox { position: fixed; inset: 0; display: none; justify-content: center; align-items: center;
-        background: rgba(0,0,0,.88); z-index: 2000; padding: 24px; touch-action: pan-y; }
-      #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,.28); user-select: none; }
-      #close { position: absolute; top: 22px; right: 28px; font-size: 2.2rem; color: #fff; cursor: pointer; font-weight: bold; z-index: 2100; }
-      .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%;
-        display: grid; place-items: center; font-size: 1.6rem; color: #fff; background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.18);
-        cursor: pointer; user-select: none; z-index: 2100; }
-      .nav-btn:hover { background: rgba(255,255,255,.18); }
-      #prev { left: 18px; }  #next { right: 18px; }
+      /* HERO SECTION */
+      .hero {
+        min-height: 100vh; display: flex; flex-direction: column;
+        justify-content: center; align-items: center; text-align: center;
+        padding: 80px 24px 60px; position: relative; overflow: hidden;
+      }
+      .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(29,78,216,0.15), transparent 70%);
+        animation: pulse 8s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.1); }
+      }
+      .hero-content { position: relative; z-index: 1; }
+      .hero h1 { 
+        font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 700;
+        letter-spacing: -2px; margin-bottom: 16px;
+        background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero h2 { 
+        font-size: clamp(1.25rem, 3vw, 2rem); font-weight: 300;
+        color: rgba(245,245,247,0.7); letter-spacing: -0.5px;
+      }
+      .hero-subtitle {
+        margin-top: 24px; font-size: 1.125rem; color: rgba(245,245,247,0.6);
+        max-width: 600px; line-height: 1.8;
+      }
+      .scroll-indicator {
+        margin-top: 60px; animation: bounce 2s infinite;
+        width: 28px; height: 48px; border: 2px solid rgba(245,245,247,0.3);
+        border-radius: 24px; position: relative;
+      }
+      .scroll-indicator::before {
+        content: ''; position: absolute; top: 8px; left: 50%;
+        transform: translateX(-50%); width: 4px; height: 8px;
+        background: rgba(245,245,247,0.6); border-radius: 2px;
+        animation: scroll 2s infinite;
+      }
+      @keyframes bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(12px) } }
+      @keyframes scroll { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(16px); } }
 
-      /* FOOTER + Social – mobile freundlich */
-      footer { border-top: 1px solid rgba(255,255,255,.1); margin-top: 32px; padding: 24px 16px 56px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #cfcfcf; }
-      .social { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; max-width: 1200px; }
-      .social a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #eaeaea; text-decoration: none; opacity: .95;
-        padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-        transition: transform .2s ease, opacity .2s ease, background .2s ease; min-height: 44px; flex: 1 1 180px; }
-      @media (min-width: 640px) { .social a { flex: 0 0 auto; } }
-      .social a:hover { transform: translateY(-1px); opacity: 1; background: rgba(255,255,255,0.08); }
-      .social svg { width: 20px; height: 20px; display: block; }
-      .copyright { opacity: .7; font-size: .95rem; text-align: center; }
+      /* GALLERY SECTION */
+      .gallery-section {
+        padding: 80px 24px; max-width: 1400px; margin: 0 auto;
+      }
+      .section-title {
+        text-align: center; margin-bottom: 60px;
+      }
+      .section-title h3 {
+        font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600;
+        letter-spacing: -1px; margin-bottom: 12px;
+      }
+      .section-title p {
+        font-size: 1.125rem; color: rgba(245,245,247,0.6);
+      }
 
-      /* Nach-oben-Button */
-      .to-top { position: fixed; right: 16px; bottom: 16px; z-index: 2200; width: 44px; height: 44px; border-radius: 50%;
-        display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
-        color: #fff; text-decoration: none; box-shadow: 0 4px 18px rgba(0,0,0,.45); opacity: 0; pointer-events: none; transform: translateY(8px);
-        transition: opacity .2s ease, transform .2s ease, background .2s ease; }
-      .to-top:hover { background: rgba(255,255,255,.12); }
+      /* CSS Grid Masonry with fallback */
+      .gallery {
+        column-count: 3; column-gap: 20px;
+      }
+      @media (max-width: 1024px) { .gallery { column-count: 2; } }
+      @media (max-width: 640px) { .gallery { column-count: 1; column-gap: 16px; } }
+
+      .gallery-item {
+        break-inside: avoid; -webkit-column-break-inside: avoid;
+        page-break-inside: avoid; margin-bottom: 20px;
+        position: relative; overflow: hidden; border-radius: 16px;
+        background: #1a1a1a; cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .gallery-item:hover { transform: translateY(-4px); }
+      .gallery-item img {
+        width: 100%; height: auto; display: block;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+        filter: brightness(0.95) contrast(1.05);
+        content-visibility: auto; contain-intrinsic-size: 300px 400px;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.05); filter: brightness(1) contrast(1.1);
+      }
+      .gallery-item::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.3) 100%);
+        opacity: 0; transition: opacity 0.4s ease;
+      }
+      .gallery-item:hover::after { opacity: 1; }
+
+      /* Progressive Enhancement: CSS Grid Masonry */
+      @supports (grid-template-rows: masonry) {
+        .gallery {
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: masonry; gap: 20px;
+          column-count: initial; column-gap: initial;
+        }
+        @media (max-width: 1024px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .gallery { grid-template-columns: 1fr; gap: 16px; } }
+        .gallery-item { margin-bottom: 0; }
+      }
+
+      /* LIGHTBOX */
+      #lightbox {
+        position: fixed; inset: 0; display: none; justify-content: center;
+        align-items: center; background: rgba(0,0,0,0.96);
+        backdrop-filter: blur(40px); z-index: 2000; padding: 40px;
+        animation: fadeIn 0.3s ease;
+      }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      #lightbox img {
+        max-width: 90vw; max-height: 85vh; border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        user-select: none; animation: zoomIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      
+      #close {
+        position: absolute; top: 32px; right: 32px;
+        width: 44px; height: 44px; border-radius: 50%;
+        display: grid; place-items: center;
+        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+        color: #fff; font-size: 1.5rem; cursor: pointer;
+        transition: all 0.2s ease; z-index: 2100;
+      }
+      #close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+
+      .nav-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 52px; height: 52px; border-radius: 50%;
+        display: grid; place-items: center; font-size: 2rem;
+        color: #fff; background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        cursor: pointer; user-select: none; z-index: 2100;
+        transition: all 0.2s ease;
+      }
+      .nav-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
+      #prev { left: 32px; }
+      #next { right: 32px; }
+
+      /* FOOTER */
+      footer {
+        border-top: 0.5px solid rgba(255,255,255,0.1);
+        padding: 60px 24px; margin-top: 80px;
+      }
+      .footer-content {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 48px;
+      }
+      .footer-section h4 {
+        font-size: 0.75rem; text-transform: uppercase;
+        letter-spacing: 1px; color: rgba(245,245,247,0.6);
+        margin-bottom: 16px; font-weight: 500;
+      }
+      .footer-links {
+        list-style: none; display: flex; flex-direction: column; gap: 12px;
+      }
+      .footer-links a {
+        color: rgba(245,245,247,0.88); text-decoration: none;
+        font-size: 0.9375rem; transition: color 0.2s ease;
+        display: inline-flex; align-items: center; gap: 8px;
+      }
+      .footer-links a:hover { color: #f5f5f7; }
+      .footer-links svg {
+        width: 20px; height: 20px; opacity: 0.8;
+      }
+      .footer-bottom {
+        max-width: 1200px; margin: 48px auto 0;
+        padding-top: 24px; border-top: 0.5px solid rgba(255,255,255,0.1);
+        text-align: center; color: rgba(245,245,247,0.5);
+        font-size: 0.875rem;
+      }
+
+      /* BACK TO TOP */
+      .to-top {
+        position: fixed; right: 24px; bottom: 24px; z-index: 2200;
+        width: 48px; height: 48px; border-radius: 50%;
+        display: grid; place-items: center;
+        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff; text-decoration: none; font-size: 1.25rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        opacity: 0; pointer-events: none; transform: translateY(16px);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .to-top:hover { background: rgba(255,255,255,0.2); }
       .to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+      /* SPECIAL LINK CARD */
+      .link-card {
+        background: linear-gradient(135deg, rgba(29,78,216,0.1) 0%, rgba(147,51,234,0.1) 100%);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px; padding: 32px;
+        text-align: center; margin: 60px auto;
+        max-width: 600px; transition: all 0.3s ease;
+      }
+      .link-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255,255,255,0.2);
+        box-shadow: 0 20px 40px rgba(29,78,216,0.2);
+      }
+      .link-card h3 {
+        font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;
+      }
+      .link-card p {
+        color: rgba(245,245,247,0.7); margin-bottom: 24px;
+      }
+      .link-card a {
+        display: inline-block; padding: 12px 32px;
+        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 999px; color: #f5f5f7; text-decoration: none;
+        font-weight: 500; transition: all 0.2s ease;
+      }
+      .link-card a:hover {
+        background: rgba(255,255,255,0.2);
+        transform: scale(1.05);
+      }
     </style>
   </head>
   <body id="top">
-    <div class="navbar">Marius Steinmann - Platform Developer</div>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#top" class="nav-logo">Marius Steinmann</a>
+        <button class="mobile-menu-btn" aria-label="Menu" id="menuBtn">☰</button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
-    <div class="hero">
-      <h1>steinmannmarius</h1>
-      <h2>Photo gallery</h2>
-      <div class="arrow">&#8595;</div>
-    </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>steinmannmarius</h1>
+        <h2>Platform Developer & Photographer</h2>
+        <p class="hero-subtitle">
+          Capturing moments through the lens, building experiences through code
+        </p>
+      </div>
+      <div class="scroll-indicator"></div>
+    </section>
 
-    <!-- Galerie: Bilder aus Repo-Root (nach Endung gefiltert) -->
-    <div class="gallery" id="gallery">
-      {%- assign _files = site.static_files | sort: "path" -%}
-      {%- assign _count = 0 -%}
-      {%- for file in _files -%}
-        {%- assign ext = file.extname | downcase -%}
-        {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
-          {%- assign eager = 'lazy' -%}
-          {%- if _count < 6 -%}{%- assign eager = 'eager' -%}{%- endif -%}
-          <img
-            src="{{ site.baseurl }}{{ file.path | uri_escape }}"
-            alt="Bild {{ _count | plus: 1 }}"
-            loading="{{ eager }}"
-            {%- if _count == 0 -%} fetchpriority="high" {%- endif -%}
-            decoding="async"
-            data-index="{{ _count }}"
-          />
-          {%- assign _count = _count | plus: 1 -%}
+    <!-- GALLERY -->
+    <section class="gallery-section" id="gallery">
+      <div class="section-title">
+        <h3>Photography</h3>
+        <p>A collection of captured moments</p>
+      </div>
+      
+      <div class="gallery" id="gallery-grid">
+        {%- assign _files = site.static_files | sort: "path" -%}
+        {%- assign _count = 0 -%}
+        {%- for file in _files -%}
+          {%- assign ext = file.extname | downcase -%}
+          {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
+            {%- assign eager = 'lazy' -%}
+            {%- if _count < 6 -%}{%- assign eager = 'eager' -%}{%- endif -%}
+            <div class="gallery-item" data-index="{{ _count }}">
+              <img
+                src="{{ site.baseurl }}{{ file.path | uri_escape }}"
+                alt="Photography {{ _count | plus: 1 }}"
+                loading="{{ eager }}"
+                {%- if _count == 0 -%} fetchpriority="high" {%- endif -%}
+                decoding="async"
+              />
+            </div>
+            {%- assign _count = _count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if _count == 0 -%}
+          <p style="grid-column: 1/-1; text-align: center; opacity: 0.6;">No images found. Add images to your repository root.</p>
         {%- endif -%}
-      {%- endfor -%}
-      {%- if _count == 0 -%}
-        <p style="opacity:.7">Keine Bilder gefunden. Lege Bilder ins Repo-Root.</p>
-      {%- endif -%}
-    </div>
+      </div>
+    </section>
 
-    <!-- Lightbox -->
-    <div id="lightbox" aria-hidden="true">
-      <span id="close" role="button" aria-label="Schließen">&times;</span>
-      <button id="prev" class="nav-btn" aria-label="Vorheriges Bild">‹</button>
-      <img id="lightbox-img" src="" alt="Großes Bild" />
-      <button id="next" class="nav-btn" aria-label="Nächstes Bild">›</button>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <div class="social" aria-label="Soziale Profile">
-        <a href="https://github.com/steinmannmarius" target="_blank" rel="noopener noreferrer" title="GitHub">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.19-3.37-1.19-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.6.07-.6 1 .07 1.52 1.05 1.52 1.05.9 1.52 2.36 1.08 2.93.82.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.02 1.59 1.02 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
-          <span>GitHub</span>
-        </a>
-        <a href="https://www.instagram.com/steinmannmarius/" target="_blank" rel="noopener noreferrer" title="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM17.75 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.75 6z"/></svg>
-          <span>Instagram</span>
-        </a>
-        <a href="https://www.linkedin.com/in/marius-steinmann-334750365/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.1V23h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.53-2.25 3.1V23h-4V8.5z"/></svg>
-          <span>LinkedIn</span>
+    <!-- WORK SECTION -->
+    <section class="gallery-section" id="work">
+      <div class="link-card">
+        <h3>⏱️ Arbeitszeiterfassung</h3>
+        <p>Track and manage your working hours efficiently</p>
+        <a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank" rel="noopener noreferrer">
+          Open Time Tracker →
         </a>
       </div>
-      <div class="copyright">© 2025 Marius Steinmann</div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" aria-hidden="true">
+      <span id="close" role="button" aria-label="Close">×</span>
+      <button id="prev" class="nav-btn" aria-label="Previous">‹</button>
+      <img id="lightbox-img" src="" alt="Large view" />
+      <button id="next" class="nav-btn" aria-label="Next">›</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="https://github.com/steinmannmarius" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.19-3.37-1.19-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.6.07-.6 1 .07 1.52 1.05 1.52 1.05.9 1.52 2.36 1.08 2.93.82.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.02 1.59 1.02 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/steinmannmarius/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM17.75 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.75 6z"/></svg>
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/marius-steinmann-334750365/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.1V23h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.53-2.25 3.1V23h-4V8.5z"/></svg>
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Projects</h4>
+          <ul class="footer-links">
+            <li><a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank">Time Tracker</a></li>
+            <li><a href="https://github.com/steinmannmarius" target="_blank">More on GitHub</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>About</h4>
+          <ul class="footer-links">
+            <li><a href="#gallery">Photography</a></li>
+            <li><a href="#work">Development</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        © 2025 Marius Steinmann. All rights reserved.
+      </div>
     </footer>
 
-    <!-- Nach-oben-Pfeil -->
-    <a href="#top" class="to-top" aria-label="Nach oben" title="Nach oben" id="toTop">↑</a>
+    <!-- BACK TO TOP -->
+    <a href="#top" class="to-top" id="toTop" aria-label="Back to top">↑</a>
 
-    <script defer>
-      // Thumbnails / Lightbox-Setup
-      const thumbs = Array.from(document.querySelectorAll('.gallery img'));
+    <script>
+      // Mobile Menu
+      const menuBtn = document.getElementById('menuBtn');
+      const navLinks = document.getElementById('navLinks');
+      menuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('active'));
+      });
+
+      // Gallery & Lightbox
+      const items = Array.from(document.querySelectorAll('.gallery-item'));
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
       const closeBtn = document.getElementById('close');
@@ -197,29 +447,21 @@ layout: null
       const toTop = document.getElementById('toTop');
       let idx = 0;
 
-      // Orientierung für bessere Platzhalter setzen (Portrait vs. Landscape)
-      thumbs.forEach(img => {
-        if (img.complete) mark(); else img.addEventListener('load', mark, { once: true });
-        function mark(){ if (img.naturalHeight > img.naturalWidth) img.dataset.orient = 'portrait'; }
-      });
-
-      // Nächstes Bild vorladen (schnellere Lightbox-Navigation)
-      function preload(i){
-        const n = thumbs[(i + thumbs.length) % thumbs.length];
-        if (!n) return;
+      function preload(i) {
+        const item = items[(i + items.length) % items.length];
+        if (!item) return;
+        const img = item.querySelector('img');
         const pre = new Image();
-        pre.src = n.currentSrc || n.src;
+        pre.src = img.currentSrc || img.src;
       }
 
       function show(i) {
-        if (!thumbs.length) return;
-        idx = (i + thumbs.length) % thumbs.length;
-        const src = thumbs[idx].currentSrc || thumbs[idx].src;
-        const alt = thumbs[idx].alt || 'Großes Bild';
-        lightboxImg.loading = 'eager';
-        lightboxImg.decoding = 'sync';
+        if (!items.length) return;
+        idx = (i + items.length) % items.length;
+        const img = items[idx].querySelector('img');
+        const src = img.currentSrc || img.src;
         lightboxImg.src = src;
-        lightboxImg.alt = alt;
+        lightboxImg.alt = img.alt || 'Large view';
         preload(idx + 1);
       }
 
@@ -227,21 +469,26 @@ layout: null
         lightbox.style.display = 'flex';
         lightbox.setAttribute('aria-hidden', 'false');
         show(i);
+        document.body.style.overflow = 'hidden';
       }
 
       function close() {
         lightbox.style.display = 'none';
         lightbox.setAttribute('aria-hidden', 'true');
         lightboxImg.src = '';
+        document.body.style.overflow = '';
       }
 
-      thumbs.forEach((img, i) => img.addEventListener('click', () => open(i)));
+      items.forEach((item, i) => {
+        item.addEventListener('click', () => open(i));
+      });
+
       closeBtn.addEventListener('click', close);
       lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
       prevBtn.addEventListener('click', () => show(idx - 1));
       nextBtn.addEventListener('click', () => show(idx + 1));
 
-      // Tastatursteuerung
+      // Keyboard
       document.addEventListener('keydown', (e) => {
         if (lightbox.style.display !== 'flex') return;
         if (e.key === 'Escape') close();
@@ -249,37 +496,49 @@ layout: null
         if (e.key === 'ArrowRight') show(idx + 1);
       });
 
-      // Touch-Swipe
-      let startX = 0, startY = 0, swiping = false;
+      // Touch Swipe
+      let startX = 0, swiping = false;
       lightbox.addEventListener('touchstart', (e) => {
         if (!e.touches.length) return;
-        const t = e.touches[0]; startX = t.clientX; startY = t.clientY; swiping = true;
+        startX = e.touches[0].clientX;
+        swiping = true;
       }, { passive: true });
+
       lightbox.addEventListener('touchmove', (e) => {
         if (!swiping) return;
-        const t = e.touches[0]; const dx = t.clientX - startX; const dy = t.clientY - startY;
-        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-          swiping = false; if (dx < 0) show(idx + 1); else show(idx - 1);
+        const dx = e.touches[0].clientX - startX;
+        if (Math.abs(dx) > 50) {
+          swiping = false;
+          dx < 0 ? show(idx + 1) : show(idx - 1);
         }
       }, { passive: true });
 
-      // Nach-oben-Button Sichtbarkeit
-      const toggleToTop = () => { if (window.scrollY > 320) toTop.classList.add('visible'); else toTop.classList.remove('visible'); };
-      window.addEventListener('scroll', toggleToTop, { passive: true }); toggleToTop();
+      // Back to Top
+      const toggleToTop = () => {
+        window.scrollY > 400 ? toTop.classList.add('visible') : toTop.classList.remove('visible');
+      };
+      window.addEventListener('scroll', toggleToTop, { passive: true });
+      toggleToTop();
 
-      // Progressive Prefetch per IntersectionObserver (lädt Bilder knapp vor Sichtbarkeit)
+      // Intersection Observer
       if ('IntersectionObserver' in window) {
         const io = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              const img = entry.target;
-              io.unobserve(img);
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              io.unobserve(entry.target);
             }
           });
-        }, { rootMargin: '200px' });
-        thumbs.forEach(img => io.observe(img));
+        }, { threshold: 0.1, rootMargin: '50px' });
+
+        items.forEach(item => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(20px)';
+          item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          io.observe(item);
+        });
       }
     </script>
   </body>
 </html>
-
