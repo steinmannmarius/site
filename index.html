@@ -38,7 +38,7 @@ layout: null
     .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 24px 80px;position:relative}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(99,102,241,.15),transparent 70%);animation:pulse 10s ease-in-out infinite;pointer-events:none}
     @keyframes pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.6;transform:scale(1.05)}}
-    .hero-content{position:relative;z-index:1;max-width:900px}
+    .hero-content{position:relative;z-index:1;max-width:900px;margin-inline: auto;padding-inline: 24px}
     .hero h1{font-size:clamp(3rem,10vw,7rem);font-weight:800;letter-spacing:-3px;margin-bottom:20px;background:linear-gradient(135deg,#fff 0%,#999 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:.95}
     .hero h2{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:300;color:rgba(245,245,247,.65);letter-spacing:-1px;margin-bottom:24px}
     .hero-subtitle{font-size:1.25rem;color:rgba(245,245,247,.5);max-width:600px;margin:0 auto;line-height:1.8}
@@ -235,6 +235,7 @@ layout: null
   </script>
 </body>
 </html>
+
 
 
 
