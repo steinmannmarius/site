@@ -3,540 +3,235 @@ layout: null
 ---
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Marius Steinmann - Photography</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Marius Steinmann - Photography & Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%}
+    body{background:#000;color:#f5f5f7;font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 50%,rgba(29,78,216,.12),transparent 70%),radial-gradient(circle at 80% 80%,rgba(139,92,246,.08),transparent 60%);pointer-events:none;z-index:0}
+    
+    /* NAV */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid rgba(255,255,255,.08)}
+    .nav-container{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+    .nav-logo{font-size:1.15rem;font-weight:600;color:#f5f5f7;text-decoration:none;letter-spacing:-.5px;transition:opacity .2s}
+    .nav-logo:hover{opacity:.8}
+    .nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+    .nav-links a{color:rgba(245,245,247,.88);text-decoration:none;font-size:.875rem;font-weight:400;transition:color .2s;position:relative}
+    .nav-links a:hover{color:#f5f5f7}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:#f5f5f7;transform:scaleX(0);transition:transform .3s ease}
+    .nav-links a:hover::after{transform:scaleX(1)}
+    .mobile-menu-btn{display:none;background:0 0;border:none;color:#f5f5f7;font-size:1.5rem;cursor:pointer;padding:4px}
+    
+    @media (max-width:768px){
+      .nav-links{position:fixed;top:60px;left:0;right:0;flex-direction:column;background:rgba(0,0,0,.96);backdrop-filter:saturate(180%) blur(20px);padding:24px;gap:24px;border-bottom:.5px solid rgba(255,255,255,.1);transform:translateY(-100%);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none}
+      .nav-links.active{transform:translateY(0);opacity:1;pointer-events:all}
+      .mobile-menu-btn{display:block}
+    }
 
-    <style>
-      * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
-      html, body { height: 100%; }
-      body { 
-        background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
-        color: #f5f5f7; 
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 24px 80px;position:relative}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(99,102,241,.15),transparent 70%);animation:pulse 10s ease-in-out infinite;pointer-events:none}
+    @keyframes pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.6;transform:scale(1.05)}}
+    .hero-content{position:relative;z-index:1;max-width:900px}
+    .hero h1{font-size:clamp(3rem,10vw,7rem);font-weight:800;letter-spacing:-3px;margin-bottom:20px;background:linear-gradient(135deg,#fff 0%,#999 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:.95}
+    .hero h2{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:300;color:rgba(245,245,247,.65);letter-spacing:-1px;margin-bottom:24px}
+    .hero-subtitle{font-size:1.25rem;color:rgba(245,245,247,.5);max-width:600px;margin:0 auto;line-height:1.8}
+    .scroll-indicator{margin-top:80px;width:32px;height:52px;border:2px solid rgba(245,245,247,.25);border-radius:24px;position:relative;animation:bounce 2s infinite}
+    .scroll-indicator::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:4px;height:10px;background:rgba(245,245,247,.5);border-radius:2px;animation:scroll 2s infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(15px)}}
+    @keyframes scroll{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(20px)}}
 
-      /* NAVIGATION - Apple Style */
-      .navbar {
-        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-        background: rgba(0,0,0,0.8); backdrop-filter: saturate(180%) blur(20px);
-        border-bottom: 0.5px solid rgba(255,255,255,0.1);
-        padding: 0;
-      }
-      .nav-container {
-        max-width: 1200px; margin: 0 auto; padding: 12px 24px;
-        display: flex; justify-content: space-between; align-items: center;
-      }
-      .nav-logo {
-        font-size: 1.2rem; font-weight: 600; color: #f5f5f7;
-        text-decoration: none; letter-spacing: -0.5px;
-      }
-      .nav-links {
-        display: flex; gap: 32px; align-items: center;
-        list-style: none;
-      }
-      .nav-links a {
-        color: rgba(245,245,247,0.88); text-decoration: none;
-        font-size: 0.875rem; font-weight: 400;
-        transition: color 0.2s ease;
-        position: relative;
-      }
-      .nav-links a:hover { color: #f5f5f7; }
-      .nav-links a::after {
-        content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-        height: 1px; background: #f5f5f7; transform: scaleX(0);
-        transition: transform 0.3s ease;
-      }
-      .nav-links a:hover::after { transform: scaleX(1); }
-      
-      .mobile-menu-btn {
-        display: none; background: none; border: none;
-        color: #f5f5f7; font-size: 1.5rem; cursor: pointer;
-      }
+    /* GALLERY */
+    .gallery-section{padding:100px 24px;max-width:1400px;margin:0 auto;position:relative;z-index:1}
+    .section-title{text-align:center;margin-bottom:80px}
+    .section-title h3{font-size:clamp(2.5rem,6vw,4rem);font-weight:700;letter-spacing:-2px;margin-bottom:16px}
+    .section-title p{font-size:1.25rem;color:rgba(245,245,247,.5);font-weight:300}
+    .gallery{column-count:3;column-gap:24px}
+    @media (max-width:1024px){.gallery{column-count:2}}
+    @media (max-width:640px){.gallery{column-count:1}}
+    .gallery-item{break-inside:avoid;margin-bottom:24px;position:relative;overflow:hidden;border-radius:20px;background:#0a0a0a;cursor:pointer;transition:transform .5s cubic-bezier(.25,.46,.45,.94),box-shadow .5s}
+    .gallery-item:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 24px 48px rgba(0,0,0,.4)}
+    .gallery-item img{width:100%;height:auto;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s;filter:brightness(.92) contrast(1.08) saturate(1.1);content-visibility:auto;contain-intrinsic-size:300px 400px}
+    .gallery-item:hover img{transform:scale(1.08);filter:brightness(1) contrast(1.12) saturate(1.2)}
+    .gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.4));opacity:0;transition:opacity .5s}
+    .gallery-item:hover::after{opacity:1}
+    
+    @supports (grid-template-rows:masonry){
+      .gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:masonry;gap:24px;column-count:initial}
+      @media (max-width:1024px){.gallery{grid-template-columns:repeat(2,1fr)}}
+      @media (max-width:640px){.gallery{grid-template-columns:1fr}}
+      .gallery-item{margin-bottom:0}
+    }
 
-      @media (max-width: 768px) {
-        .nav-links { 
-          position: fixed; top: 56px; left: 0; right: 0;
-          flex-direction: column; background: rgba(0,0,0,0.95);
-          backdrop-filter: saturate(180%) blur(20px);
-          padding: 24px; gap: 24px; border-bottom: 0.5px solid rgba(255,255,255,0.1);
-          transform: translateY(-100%); opacity: 0;
-          transition: transform 0.3s ease, opacity 0.3s ease;
-          pointer-events: none;
-        }
-        .nav-links.active {
-          transform: translateY(0); opacity: 1; pointer-events: all;
-        }
-        .mobile-menu-btn { display: block; }
-      }
+    /* LIGHTBOX */
+    #lightbox{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.97);backdrop-filter:blur(60px);z-index:2000;padding:40px;animation:fadeIn .25s}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    #lightbox img{max-width:92vw;max-height:88vh;border-radius:16px;box-shadow:0 30px 60px rgba(0,0,0,.6);user-select:none;animation:zoomIn .35s cubic-bezier(.25,.46,.45,.94)}
+    @keyframes zoomIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+    #close{position:absolute;top:32px;right:32px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1.6rem;cursor:pointer;transition:all .2s;z-index:2100}
+    #close:hover{background:rgba(255,255,255,.15);transform:rotate(90deg)}
+    .nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:2.2rem;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;user-select:none;z-index:2100;transition:all .2s;font-weight:300}
+    .nav-btn:hover{background:rgba(255,255,255,.15);transform:translateY(-50%) scale(1.08)}
+    #prev{left:32px}
+    #next{right:32px}
 
-      /* HERO SECTION */
-      .hero {
-        min-height: 100vh; display: flex; flex-direction: column;
-        justify-content: center; align-items: center; text-align: center;
-        padding: 80px 24px 60px; position: relative; overflow: hidden;
-      }
-      .hero::before {
-        content: ''; position: absolute; inset: 0;
-        background: radial-gradient(circle at 50% 50%, rgba(29,78,216,0.15), transparent 70%);
-        animation: pulse 8s ease-in-out infinite;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(1.1); }
-      }
-      .hero-content { position: relative; z-index: 1; }
-      .hero h1 { 
-        font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 700;
-        letter-spacing: -2px; margin-bottom: 16px;
-        background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .hero h2 { 
-        font-size: clamp(1.25rem, 3vw, 2rem); font-weight: 300;
-        color: rgba(245,245,247,0.7); letter-spacing: -0.5px;
-      }
-      .hero-subtitle {
-        margin-top: 24px; font-size: 1.125rem; color: rgba(245,245,247,0.6);
-        max-width: 600px; line-height: 1.8;
-      }
-      .scroll-indicator {
-        margin-top: 60px; animation: bounce 2s infinite;
-        width: 28px; height: 48px; border: 2px solid rgba(245,245,247,0.3);
-        border-radius: 24px; position: relative;
-      }
-      .scroll-indicator::before {
-        content: ''; position: absolute; top: 8px; left: 50%;
-        transform: translateX(-50%); width: 4px; height: 8px;
-        background: rgba(245,245,247,0.6); border-radius: 2px;
-        animation: scroll 2s infinite;
-      }
-      @keyframes bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(12px) } }
-      @keyframes scroll { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(16px); } }
+    /* WORK CARD */
+    .work-section{padding:40px 24px 100px;max-width:800px;margin:0 auto;position:relative;z-index:1}
+    .work-card{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.12));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:48px 40px;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+    .work-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.03),transparent);pointer-events:none;opacity:0;transition:opacity .4s}
+    .work-card:hover::before{opacity:1}
+    .work-card:hover{transform:translateY(-8px);border-color:rgba(99,102,241,.3);box-shadow:0 32px 64px rgba(99,102,241,.25)}
+    .work-card-icon{font-size:3.5rem;margin-bottom:24px;display:inline-block;animation:float 3s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .work-card h3{font-size:2rem;margin-bottom:16px;font-weight:700;letter-spacing:-1px}
+    .work-card p{color:rgba(245,245,247,.6);margin-bottom:32px;font-size:1.125rem;line-height:1.7}
+    .work-card a{display:inline-flex;align-items:center;gap:12px;padding:16px 36px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;color:#f5f5f7;text-decoration:none;font-weight:600;font-size:1.0625rem;transition:all .3s;letter-spacing:-.3px}
+    .work-card a:hover{background:rgba(255,255,255,.15);transform:scale(1.05);box-shadow:0 12px 24px rgba(99,102,241,.3)}
+    .work-card a::after{content:'→';font-size:1.2rem;transition:transform .3s}
+    .work-card a:hover::after{transform:translateX(4px)}
 
-      /* GALLERY SECTION */
-      .gallery-section {
-        padding: 80px 24px; max-width: 1400px; margin: 0 auto;
-      }
-      .section-title {
-        text-align: center; margin-bottom: 60px;
-      }
-      .section-title h3 {
-        font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600;
-        letter-spacing: -1px; margin-bottom: 12px;
-      }
-      .section-title p {
-        font-size: 1.125rem; color: rgba(245,245,247,0.6);
-      }
+    /* FOOTER */
+    footer{border-top:.5px solid rgba(255,255,255,.08);padding:80px 24px 40px;margin-top:100px;position:relative;z-index:1}
+    .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:48px}
+    .footer-section h4{font-size:.75rem;text-transform:uppercase;letter-spacing:1.2px;color:rgba(245,245,247,.5);margin-bottom:20px;font-weight:600}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .footer-links a{color:rgba(245,245,247,.85);text-decoration:none;font-size:.9375rem;transition:all .2s;display:inline-flex;align-items:center;gap:10px;font-weight:400}
+    .footer-links a:hover{color:#f5f5f7;transform:translateX(4px)}
+    .footer-links svg{width:20px;height:20px;opacity:.7}
+    .footer-bottom{max-width:1200px;margin:60px auto 0;padding-top:28px;border-top:.5px solid rgba(255,255,255,.06);text-align:center;color:rgba(245,245,247,.4);font-size:.875rem;font-weight:300}
+    .to-top{position:fixed;right:28px;bottom:28px;z-index:2200;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);color:#fff;text-decoration:none;font-size:1.4rem;box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transform:translateY(20px);transition:all .3s cubic-bezier(.25,.46,.45,.94)}
+    .to-top:hover{background:rgba(255,255,255,.15);transform:translateY(0) scale(1.08)}
+    .to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+  </style>
+</head>
+<body id="top">
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#top" class="nav-logo">Marius Steinmann</a>
+      <button class="mobile-menu-btn" aria-label="Menu" id="menuBtn">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      /* CSS Grid Masonry with fallback */
-      .gallery {
-        column-count: 3; column-gap: 20px;
-      }
-      @media (max-width: 1024px) { .gallery { column-count: 2; } }
-      @media (max-width: 640px) { .gallery { column-count: 1; column-gap: 16px; } }
+  <section class="hero">
+    <div class="hero-content">
+      <h1>steinmannmarius</h1>
+      <h2>Platform Developer & Photographer</h2>
+      <p class="hero-subtitle">Crafting digital experiences and capturing life's moments with precision and passion</p>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
 
-      .gallery-item {
-        break-inside: avoid; -webkit-column-break-inside: avoid;
-        page-break-inside: avoid; margin-bottom: 20px;
-        position: relative; overflow: hidden; border-radius: 16px;
-        background: #1a1a1a; cursor: pointer;
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      }
-      .gallery-item:hover { transform: translateY(-4px); }
-      .gallery-item img {
-        width: 100%; height: auto; display: block;
-        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
-        filter: brightness(0.95) contrast(1.05);
-        content-visibility: auto; contain-intrinsic-size: 300px 400px;
-      }
-      .gallery-item:hover img {
-        transform: scale(1.05); filter: brightness(1) contrast(1.1);
-      }
-      .gallery-item::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.3) 100%);
-        opacity: 0; transition: opacity 0.4s ease;
-      }
-      .gallery-item:hover::after { opacity: 1; }
+  <section class="gallery-section" id="gallery">
+    <div class="section-title">
+      <h3>Photography</h3>
+      <p>A curated collection of moments</p>
+    </div>
+    <div class="gallery" id="gallery-grid">
+      {%- assign _files = site.static_files | sort: "path" -%}
+      {%- assign _count = 0 -%}
+      {%- for file in _files -%}
+        {%- assign ext = file.extname | downcase -%}
+        {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
+          {%- assign eager = 'lazy' -%}
+          {%- if _count < 6 -%}{%- assign eager = 'eager' -%}{%- endif -%}
+          <div class="gallery-item" data-index="{{ _count }}">
+            <img src="{{ site.baseurl }}{{ file.path | uri_escape }}" alt="Photography {{ _count | plus: 1 }}" loading="{{ eager }}" {%- if _count == 0 -%} fetchpriority="high" {%- endif -%} decoding="async"/>
+          </div>
+          {%- assign _count = _count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </section>
 
-      /* Progressive Enhancement: CSS Grid Masonry */
-      @supports (grid-template-rows: masonry) {
-        .gallery {
-          display: grid; grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: masonry; gap: 20px;
-          column-count: initial; column-gap: initial;
-        }
-        @media (max-width: 1024px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .gallery { grid-template-columns: 1fr; gap: 16px; } }
-        .gallery-item { margin-bottom: 0; }
-      }
+  <section class="work-section" id="work">
+    <div class="work-card">
+      <div class="work-card-icon">⏱️</div>
+      <h3>Arbeitszeiterfassung</h3>
+      <p>Professional time tracking tool for efficient work hour management</p>
+      <a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank" rel="noopener noreferrer">Launch App</a>
+    </div>
+  </section>
 
-      /* LIGHTBOX */
-      #lightbox {
-        position: fixed; inset: 0; display: none; justify-content: center;
-        align-items: center; background: rgba(0,0,0,0.96);
-        backdrop-filter: blur(40px); z-index: 2000; padding: 40px;
-        animation: fadeIn 0.3s ease;
-      }
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      #lightbox img {
-        max-width: 90vw; max-height: 85vh; border-radius: 12px;
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        user-select: none; animation: zoomIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      }
-      @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-      
-      #close {
-        position: absolute; top: 32px; right: 32px;
-        width: 44px; height: 44px; border-radius: 50%;
-        display: grid; place-items: center;
-        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-        color: #fff; font-size: 1.5rem; cursor: pointer;
-        transition: all 0.2s ease; z-index: 2100;
-      }
-      #close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+  <div id="lightbox" aria-hidden="true">
+    <span id="close" role="button" aria-label="Close">×</span>
+    <button id="prev" class="nav-btn" aria-label="Previous">‹</button>
+    <img id="lightbox-img" src="" alt="Large view"/>
+    <button id="next" class="nav-btn" aria-label="Next">›</button>
+  </div>
 
-      .nav-btn {
-        position: absolute; top: 50%; transform: translateY(-50%);
-        width: 52px; height: 52px; border-radius: 50%;
-        display: grid; place-items: center; font-size: 2rem;
-        color: #fff; background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-        cursor: pointer; user-select: none; z-index: 2100;
-        transition: all 0.2s ease;
-      }
-      .nav-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
-      #prev { left: 32px; }
-      #next { right: 32px; }
-
-      /* FOOTER */
-      footer {
-        border-top: 0.5px solid rgba(255,255,255,0.1);
-        padding: 60px 24px; margin-top: 80px;
-      }
-      .footer-content {
-        max-width: 1200px; margin: 0 auto;
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 48px;
-      }
-      .footer-section h4 {
-        font-size: 0.75rem; text-transform: uppercase;
-        letter-spacing: 1px; color: rgba(245,245,247,0.6);
-        margin-bottom: 16px; font-weight: 500;
-      }
-      .footer-links {
-        list-style: none; display: flex; flex-direction: column; gap: 12px;
-      }
-      .footer-links a {
-        color: rgba(245,245,247,0.88); text-decoration: none;
-        font-size: 0.9375rem; transition: color 0.2s ease;
-        display: inline-flex; align-items: center; gap: 8px;
-      }
-      .footer-links a:hover { color: #f5f5f7; }
-      .footer-links svg {
-        width: 20px; height: 20px; opacity: 0.8;
-      }
-      .footer-bottom {
-        max-width: 1200px; margin: 48px auto 0;
-        padding-top: 24px; border-top: 0.5px solid rgba(255,255,255,0.1);
-        text-align: center; color: rgba(245,245,247,0.5);
-        font-size: 0.875rem;
-      }
-
-      /* BACK TO TOP */
-      .to-top {
-        position: fixed; right: 24px; bottom: 24px; z-index: 2200;
-        width: 48px; height: 48px; border-radius: 50%;
-        display: grid; place-items: center;
-        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.2);
-        color: #fff; text-decoration: none; font-size: 1.25rem;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        opacity: 0; pointer-events: none; transform: translateY(16px);
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      }
-      .to-top:hover { background: rgba(255,255,255,0.2); }
-      .to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
-      /* SPECIAL LINK CARD */
-      .link-card {
-        background: linear-gradient(135deg, rgba(29,78,216,0.1) 0%, rgba(147,51,234,0.1) 100%);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 20px; padding: 32px;
-        text-align: center; margin: 60px auto;
-        max-width: 600px; transition: all 0.3s ease;
-      }
-      .link-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255,255,255,0.2);
-        box-shadow: 0 20px 40px rgba(29,78,216,0.2);
-      }
-      .link-card h3 {
-        font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;
-      }
-      .link-card p {
-        color: rgba(245,245,247,0.7); margin-bottom: 24px;
-      }
-      .link-card a {
-        display: inline-block; padding: 12px 32px;
-        background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 999px; color: #f5f5f7; text-decoration: none;
-        font-weight: 500; transition: all 0.2s ease;
-      }
-      .link-card a:hover {
-        background: rgba(255,255,255,0.2);
-        transform: scale(1.05);
-      }
-    </style>
-  </head>
-  <body id="top">
-    <!-- NAVIGATION -->
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="#top" class="nav-logo">Marius Steinmann</a>
-        <button class="mobile-menu-btn" aria-label="Menu" id="menuBtn">☰</button>
-        <ul class="nav-links" id="navLinks">
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#work">Work</a></li>
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <ul class="footer-links">
+          <li><a href="https://github.com/steinmannmarius" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.19-3.37-1.19-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.6.07-.6 1 .07 1.52 1.05 1.52 1.05.9 1.52 2.36 1.08 2.93.82.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.02 1.59 1.02 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>GitHub</a></li>
+          <li><a href="https://www.instagram.com/steinmannmarius/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM17.75 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.75 6z"/></svg>Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/marius-steinmann-334750365/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.1V23h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.53-2.25 3.1V23h-4V8.5z"/></svg>LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Projects</h4>
+        <ul class="footer-links">
+          <li><a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank">Time Tracker</a></li>
+          <li><a href="https://github.com/steinmannmarius" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#gallery">Photography</a></li>
+          <li><a href="#work">Development</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1>steinmannmarius</h1>
-        <h2>Platform Developer</h2>
-      </div>
-      <div class="scroll-indicator"></div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="gallery-section" id="gallery">
-      <div class="section-title">
-        <h3>Photography</h3>
-        <p>A collection of captured moments</p>
-      </div>
-      
-      <div class="gallery" id="gallery-grid">
-        {%- assign _files = site.static_files | sort: "path" -%}
-        {%- assign _count = 0 -%}
-        {%- for file in _files -%}
-          {%- assign ext = file.extname | downcase -%}
-          {%- if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.avif' or ext == '.gif' -%}
-            {%- assign eager = 'lazy' -%}
-            {%- if _count < 6 -%}{%- assign eager = 'eager' -%}{%- endif -%}
-            <div class="gallery-item" data-index="{{ _count }}">
-              <img
-                src="{{ site.baseurl }}{{ file.path | uri_escape }}"
-                alt="Photography {{ _count | plus: 1 }}"
-                loading="{{ eager }}"
-                {%- if _count == 0 -%} fetchpriority="high" {%- endif -%}
-                decoding="async"
-              />
-            </div>
-            {%- assign _count = _count | plus: 1 -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if _count == 0 -%}
-          <p style="grid-column: 1/-1; text-align: center; opacity: 0.6;">No images found. Add images to your repository root.</p>
-        {%- endif -%}
-      </div>
-    </section>
-
-    <!-- WORK SECTION -->
-    <section class="gallery-section" id="work">
-      <div class="link-card">
-        <h3>⏱️ Arbeitszeiterfassung</h3>
-        <p>Track and manage your working hours efficiently</p>
-        <a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank" rel="noopener noreferrer">
-          Open Time Tracker →
-        </a>
-      </div>
-    </section>
-
-    <!-- LIGHTBOX -->
-    <div id="lightbox" aria-hidden="true">
-      <span id="close" role="button" aria-label="Close">×</span>
-      <button id="prev" class="nav-btn" aria-label="Previous">‹</button>
-      <img id="lightbox-img" src="" alt="Large view" />
-      <button id="next" class="nav-btn" aria-label="Next">›</button>
     </div>
+    <div class="footer-bottom">© 2025 Marius Steinmann. All rights reserved.</div>
+  </footer>
 
-    <!-- FOOTER -->
-    <footer id="contact">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Connect</h4>
-          <ul class="footer-links">
-            <li>
-              <a href="https://github.com/steinmannmarius" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.19-3.37-1.19-.46-1.16-1.12-1.47-1.12-1.47-.91-.62.07-.6.07-.6 1 .07 1.52 1.05 1.52 1.05.9 1.52 2.36 1.08 2.93.82.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.9-1.29 2.74-1.02 2.74-1.02.55 1.37.2 2.39.1 2.64.64.7 1.02 1.59 1.02 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://www.instagram.com/steinmannmarius/" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM17.75 6a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 17.75 6z"/></svg>
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/marius-steinmann-334750365/" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.1V23h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.53-2.25 3.1V23h-4V8.5z"/></svg>
-                LinkedIn
-              </a>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Projects</h4>
-          <ul class="footer-links">
-            <li><a href="https://steinmannmarius.github.io/arbeitszeitrechner/" target="_blank">Time Tracker</a></li>
-            <li><a href="https://github.com/steinmannmarius" target="_blank">More on GitHub</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>About</h4>
-          <ul class="footer-links">
-            <li><a href="#gallery">Photography</a></li>
-            <li><a href="#work">Development</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        © 2025 Marius Steinmann. All rights reserved.
-      </div>
-    </footer>
+  <a href="#top" class="to-top" id="toTop" aria-label="Back to top">↑</a>
 
-    <!-- BACK TO TOP -->
-    <a href="#top" class="to-top" id="toTop" aria-label="Back to top">↑</a>
-
-    <script>
-      // Mobile Menu
-      const menuBtn = document.getElementById('menuBtn');
-      const navLinks = document.getElementById('navLinks');
-      menuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => navLinks.classList.remove('active'));
-      });
-
-      // Gallery & Lightbox
-      const items = Array.from(document.querySelectorAll('.gallery-item'));
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      const closeBtn = document.getElementById('close');
-      const prevBtn = document.getElementById('prev');
-      const nextBtn = document.getElementById('next');
-      const toTop = document.getElementById('toTop');
-      let idx = 0;
-
-      function preload(i) {
-        const item = items[(i + items.length) % items.length];
-        if (!item) return;
-        const img = item.querySelector('img');
-        const pre = new Image();
-        pre.src = img.currentSrc || img.src;
-      }
-
-      function show(i) {
-        if (!items.length) return;
-        idx = (i + items.length) % items.length;
-        const img = items[idx].querySelector('img');
-        const src = img.currentSrc || img.src;
-        lightboxImg.src = src;
-        lightboxImg.alt = img.alt || 'Large view';
-        preload(idx + 1);
-      }
-
-      function open(i) {
-        lightbox.style.display = 'flex';
-        lightbox.setAttribute('aria-hidden', 'false');
-        show(i);
-        document.body.style.overflow = 'hidden';
-      }
-
-      function close() {
-        lightbox.style.display = 'none';
-        lightbox.setAttribute('aria-hidden', 'true');
-        lightboxImg.src = '';
-        document.body.style.overflow = '';
-      }
-
-      items.forEach((item, i) => {
-        item.addEventListener('click', () => open(i));
-      });
-
-      closeBtn.addEventListener('click', close);
-      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
-      prevBtn.addEventListener('click', () => show(idx - 1));
-      nextBtn.addEventListener('click', () => show(idx + 1));
-
-      // Keyboard
-      document.addEventListener('keydown', (e) => {
-        if (lightbox.style.display !== 'flex') return;
-        if (e.key === 'Escape') close();
-        if (e.key === 'ArrowLeft') show(idx - 1);
-        if (e.key === 'ArrowRight') show(idx + 1);
-      });
-
-      // Touch Swipe
-      let startX = 0, swiping = false;
-      lightbox.addEventListener('touchstart', (e) => {
-        if (!e.touches.length) return;
-        startX = e.touches[0].clientX;
-        swiping = true;
-      }, { passive: true });
-
-      lightbox.addEventListener('touchmove', (e) => {
-        if (!swiping) return;
-        const dx = e.touches[0].clientX - startX;
-        if (Math.abs(dx) > 50) {
-          swiping = false;
-          dx < 0 ? show(idx + 1) : show(idx - 1);
-        }
-      }, { passive: true });
-
-      // Back to Top
-      const toggleToTop = () => {
-        window.scrollY > 400 ? toTop.classList.add('visible') : toTop.classList.remove('visible');
-      };
-      window.addEventListener('scroll', toggleToTop, { passive: true });
-      toggleToTop();
-
-      // Intersection Observer
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1, rootMargin: '50px' });
-
-        items.forEach(item => {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(20px)';
-          item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-          io.observe(item);
-        });
-      }
-    </script>
-  </body>
+  <script>
+    const menuBtn=document.getElementById('menuBtn'),navLinks=document.getElementById('navLinks');
+    menuBtn.addEventListener('click',()=>navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>navLinks.classList.remove('active')));
+    
+    const items=Array.from(document.querySelectorAll('.gallery-item')),lightbox=document.getElementById('lightbox'),
+    lightboxImg=document.getElementById('lightbox-img'),closeBtn=document.getElementById('close'),
+    prevBtn=document.getElementById('prev'),nextBtn=document.getElementById('next'),toTop=document.getElementById('toTop');
+    let idx=0;
+    
+    function preload(i){const item=items[(i+items.length)%items.length];if(!item)return;const img=item.querySelector('img'),pre=new Image();pre.src=img.currentSrc||img.src}
+    function show(i){if(!items.length)return;idx=(i+items.length)%items.length;const img=items[idx].querySelector('img');lightboxImg.src=img.currentSrc||img.src;lightboxImg.alt=img.alt||'Large view';preload(idx+1)}
+    function open(i){lightbox.style.display='flex';lightbox.setAttribute('aria-hidden','false');show(i);document.body.style.overflow='hidden'}
+    function close(){lightbox.style.display='none';lightbox.setAttribute('aria-hidden','true');lightboxImg.src='';document.body.style.overflow=''}
+    
+    items.forEach((item,i)=>item.addEventListener('click',()=>open(i)));
+    closeBtn.addEventListener('click',close);
+    lightbox.addEventListener('click',e=>{if(e.target===lightbox)close()});
+    prevBtn.addEventListener('click',()=>show(idx-1));
+    nextBtn.addEventListener('click',()=>show(idx+1));
+    
+    document.addEventListener('keydown',e=>{if(lightbox.style.display!=='flex')return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1)});
+    
+    let startX=0,swiping=false;
+    lightbox.addEventListener('touchstart',e=>{if(!e.touches.length)return;startX=e.touches[0].clientX;swiping=true},{passive:true});
+    lightbox.addEventListener('touchmove',e=>{if(!swiping)return;const dx=e.touches[0].clientX-startX;if(Math.abs(dx)>50){swiping=false;dx<0?show(idx+1):show(idx-1)}},{passive:true});
+    
+    const toggleToTop=()=>window.scrollY>400?toTop.classList.add('visible'):toTop.classList.remove('visible');
+    window.addEventListener('scroll',toggleToTop,{passive:true});toggleToTop();
+    
+    if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)';io.unobserve(entry.target)}})},{threshold:.1,rootMargin:'50px'});items.forEach(item=>{item.style.opacity='0';item.style.transform='translateY(30px)';item.style.transition='opacity .8s ease, transform .8s ease';io.observe(item)})}
+  </script>
+</body>
 </html>
-
